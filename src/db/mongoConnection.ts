@@ -7,7 +7,7 @@ const mongoDbConnection = () => {
       console.log('Successfully connected to MongoDB');
     })
     .catch(error => {
-      console.log('Connection failed. Exiting now...');
+      console.log('Connection MongoDB failed.');
       console.error(error);
       process.exit(1);
     });

@@ -1,20 +1,26 @@
+import { debug } from 'console';
 import AlunoModel from '../../infra/models/AlunoModel';
 import { AlunoRepository } from '../repo/AlunoRepository';
 import { CPF } from '../ValueObject/CPF';
+import { IAlunoRequestDTO, IAlunoService } from './IAlunoService';
 
-export class AlunoService {
+export class AlunoService implements IAlunoService {
   private alunoRepository: AlunoRepository;
 
   constructor(alunoRepository: AlunoRepository) {
     this.alunoRepository = alunoRepository;
   }
 
-  async NovoAluno(nome: string, numeroCelular: string, matricula: string, cpf: CPF) {
+  async NovoAluno({
+    nome,
+    numeroCelular,
+    matricula,
+    cpf,
+  }: IAlunoRequestDTO) {
     var alunoExiste = await this.alunoRepository.encontrarCPF(cpf.valor);
-
    if (alunoExiste) throw new Error("");
 
-    const alunoDB = await AlunoModel.create({
+    const alunoDB = new AlunoModel({
       nome,
       numeroCelular,
       matricula,

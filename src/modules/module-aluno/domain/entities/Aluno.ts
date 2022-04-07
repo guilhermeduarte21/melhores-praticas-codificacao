@@ -1,6 +1,7 @@
 import { CPF } from '../ValueObject/CPF';
+import { IAluno } from './IAluno';
 
-export class Aluno {
+export class Aluno  implements IAluno {
   public nome: string;
   public numeroCelular: string;
   public matricula: string;

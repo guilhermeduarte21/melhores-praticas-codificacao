@@ -1,27 +1,24 @@
 import { Request, Response } from 'express';
-import { AlunoService } from '../domain/services/AlunoService';
-
+import { IAlunoService } from '../domain/services/IAlunoService';
 import { CPF } from '../domain/ValueObject/CPF';
 
 export class AlunoController {
-  private alunoService: AlunoService;
+  private alunoService: IAlunoService;
 
-  constructor(alunoService: AlunoService) {
+  constructor(alunoService: IAlunoService) {
     this.alunoService = alunoService;
   }
 
   async CadastrarNovoAluno(request: Request, response: Response) {
     try {
       const { nome, numeroCelular, matricula, cpf } = request.body;
-
-      const cpfFormatado = new CPF(cpf);
       
-      const aluno = await this.alunoService.NovoAluno(
+      const aluno = await this.alunoService.NovoAluno({
         nome,
         numeroCelular,
         matricula,
-        cpfFormatado
-      );
+        cpf: new CPF(cpf)
+        });
 
       return response.json(aluno);
     } catch (error) {
